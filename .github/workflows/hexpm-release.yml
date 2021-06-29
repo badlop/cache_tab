@@ -12,6 +12,10 @@ jobs:
       - name: Check out
         uses: actions/checkout@v2
 
+      - run: ls -la ~/.config/rebar3/
+
+      - run: cat "{plugins, [rebar3_hex]}." >> ~/.config/rebar3/rebar.config
+
       - name: Publish to hex.pm
         run: DIAGNOSTIC=1 rebar3 hex publish --repo hexpm --yes
         env:
