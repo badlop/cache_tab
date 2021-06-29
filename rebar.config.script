@@ -134,7 +134,7 @@ Rules = [
 	 {[deps], IsRebar3,
 	  Rebar3DepsFilter, []},
 	 {[plugins], IsRebar3,
-	  AppendList([rebar3_hex, pc]), []},
+	  AppendList([pc]), []},
 	 {[provider_hooks], IsRebar3,
 	  AppendList([{pre, [
 			     {compile, {pc, compile}},
