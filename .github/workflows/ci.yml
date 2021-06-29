@@ -13,18 +13,8 @@ jobs:
     runs-on: ubuntu-20.04
     container:
       image: erlang:${{ matrix.otp }}
-
     steps:
-
     - uses: actions/checkout@v2
-
-    - name: Cache rebar3
-      uses: actions/cache@v2
-      with:
-        path: |
-          ~/.cache/rebar3/
-        key: ${{matrix.otp}}-${{hashFiles('rebar.config')}}
-
     - run: rebar3 compile
     - run: rebar3 xref
     - run: rebar3 dialyzer
@@ -36,12 +26,6 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
-    - name: Cache rebar3
-      uses: actions/cache@v2
-      with:
-        path: |
-          ~/.cache/rebar3/
-        key: ${{matrix.otp}}-${{hashFiles('rebar.config')}}
     - run: ./configure --enable-gcov
     - run: rebar3 compile
     - run: rebar3 eunit -v
