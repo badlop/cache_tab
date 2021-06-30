@@ -1,4 +1,4 @@
-name: hexpm-release
+name: Hex.pm
 
 on:
   push:
