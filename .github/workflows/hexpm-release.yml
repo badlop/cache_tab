@@ -19,12 +19,11 @@ jobs:
 
       - run: mkdir doc
 
-      - uses: ZacJW/markdown-html-action@1.1.0
+      - name: Convert Markdown to HTML
+        uses: natescherer/markdown-to-html-with-github-style-action@v1
         with:
-          input_files: '[["README.md"]]'
-          output_files: '["doc/index.html"]'
-          packages: 'pymdown-extensions'
-          extensions: '["pymdownx.extra"]'
+          path: README.md
+          outputpath: doc
 
       - name: Publish to hex.pm
         run: DIAGNOSTIC=1 rebar3 hex publish --repo hexpm --yes

@@ -23,7 +23,7 @@
 
 {application, cttest,
  [{description,  "TEST TEST In-memory cache Erlang / Elixir library"},
-  {vsn,          "6.0.4"},
+  {vsn,          "6.0.5"},
   {modules,      []},
   {registered,   []},
   {applications, [kernel, stdlib, p1_utils]},
