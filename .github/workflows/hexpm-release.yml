@@ -17,22 +17,17 @@ jobs:
           mkdir -p ~/.config/rebar3/
           echo "{plugins, [rebar3_hex]}." > ~/.config/rebar3/rebar.config
 
-      - run: mkdir docs
+      - run: mkdir doc
 
       - uses: ZacJW/markdown-html-action@1.1.0
         with:
           input_files: '[["README.md"]]'
-          output_files: '["docs/index.html"]'
+          output_files: '["doc/index.html"]'
           packages: 'pymdown-extensions'
           extensions: '["pymdownx.extra"]'
 
       - name: Publish to hex.pm
         run: DIAGNOSTIC=1 rebar3 hex publish --repo hexpm --yes
-        env:
-          HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
-
-      - name: Publish docs to hex.pm
-        run: DIAGNOSTIC=1 rebar3 hex docs --repo hexpm --yes
         env:
           HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
 
