@@ -1,6 +1,6 @@
 %%%-------------------------------------------------------------------
 %%% @author Evgeny Khramtsov <ekhramtsov@process-one.net>
-%%% Created : 24 Apr 2017 by Evgeny Khramtsov <ekhramtsov@process-one.net>
+%%% Created : 24 Apr 2017 by Evgeny Khramtsov
 %%%
 %%%
 %%% Copyright (C) 2002-2021 ProcessOne, SARL. All Rights Reserved.

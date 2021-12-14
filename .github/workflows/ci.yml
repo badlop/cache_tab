@@ -19,6 +19,9 @@ jobs:
     - run: rebar3 xref
     - run: rebar3 dialyzer
     - run: rebar3 eunit -v
+    - run: rebar3 edoc
+
+
 
   cover:
     name: Cover
