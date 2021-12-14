@@ -31,6 +31,7 @@ jobs:
       run: rebar3 eunit -v
 
     - name: result2
+      if: always()
       run: |
         echo 'repository: ${{ github.repository }}'
         echo 'edoc outcome: ${{ steps.edoc.outcome }}'
@@ -46,6 +47,26 @@ jobs:
         destination_dir: edoc
         publish_branch: ecil
         keep_files: true
+
+    - name: Upload edoc to GitHub Pages
+      if: (steps.ctstep.outcome == failure) && (github.repository == 'badlop/cache_tab')
+      run: |
+        echo 'repository: ${{ github.repository }}'
+
+    - name: Upload edoc to GitHub Pages
+      if: (steps.ctstep.outcome == 'failure')
+      run: |
+        echo 'repository: ${{ github.repository }}'
+
+    - name: Upload edoc to GitHub Pages
+      if: steps.ctstep.outcome == 'failure'
+      run: |
+        echo 'repository: ${{ github.repository }}'
+
+    - name: Upload edoc to GitHub Pages
+      if: ${{ steps.ctstep.outcome }} == 'failure'
+      run: |
+        echo 'repository: ${{ github.repository }}'
 
     - name: View links to Github Pages
       if: (steps.ctstep.outcome != 'success') && (github.repository == 'badlop/cache_tab')
