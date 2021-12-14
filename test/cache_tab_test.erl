@@ -40,7 +40,7 @@ start_test() ->
 
 dirty_insert_test() ->
     ?assertEqual(ok, cache_tab:new(test_tbl, [])),
-    ?assertEqual(ok, cache_tab:dirty_insert(test_tbl, 1, a, fun() -> ok end)),
+    ?assertEqual(dummy_error, cache_tab:dirty_insert(test_tbl, 1, a, fun() -> ok end)),
     ?assertEqual({ok, a}, cache_tab:dirty_lookup(test_tbl, 1, fun() -> error end)),
     ?assertEqual(ok, cache_tab:delete(test_tbl)).
 
