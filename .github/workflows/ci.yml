@@ -47,6 +47,7 @@ jobs:
         destination_dir: edoc
         publish_branch: ecil
         keep_files: true
+        github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Upload edoc to GitHub Pages
       if: always() && (steps.ctstep.outcome == 'failure')
