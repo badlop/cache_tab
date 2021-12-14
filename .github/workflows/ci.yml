@@ -28,10 +28,10 @@ jobs:
       id: ctstep
       run: rebar3 eunit -v
 
-    - run: echo "Resultado1: steps.ctstep.outcome"
+    - run: echo 'Resultado1: steps.ctstep.outcome'
       continue-on-error: true
 
-    - run: echo "Resultado2: ${{ steps.ctstep.outcome }}"
+    - run: echo 'Resultado2: ${{ steps.ctstep.outcome }}'
       continue-on-error: true
 
     - name: Upload edoc to GitHub Pages
