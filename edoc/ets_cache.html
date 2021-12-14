@@ -1,0 +1,362 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Module ets_cache</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module ets_cache</h1>
+<ul class="index"><li><a href="#types">Data Types</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>
+
+<p><b>Behaviours:</b> <a href="gen_server.html"><tt>gen_server</tt></a>.</p>
+<p><b>Authors:</b> Evgeny Khramtsov (<a href="mailto:ekhramtsov@process-one.net"><tt>ekhramtsov@process-one.net</tt></a>).</p>
+
+<h2><a name="types">Data Types</a></h2>
+
+<h3 class="typedecl"><a name="type-counter">counter()</a></h3>
+<p><tt>counter() = non_neg_integer()</tt></p>
+
+
+<h3 class="typedecl"><a name="type-filter_fun">filter_fun()</a></h3>
+<p><tt>filter_fun() = fun((any(), {ok, any()} | error) -&gt; boolean())</tt></p>
+
+
+<h3 class="typedecl"><a name="type-fold_fun">fold_fun()</a></h3>
+<p><tt>fold_fun() = fun((any(), {ok, any()} | error, any()) -&gt; any())</tt></p>
+
+
+<h3 class="typedecl"><a name="type-milli_seconds">milli_seconds()</a></h3>
+<p><tt>milli_seconds() = pos_integer()</tt></p>
+
+
+<h3 class="typedecl"><a name="type-option">option()</a></h3>
+<p><tt>option() = {max_size, pos_integer() | infinity} | {life_time, <a href="#type-milli_seconds">milli_seconds()</a> | infinity} | {cache_missed, boolean()} | {type, set | ordered_set | bag | duplicate_bag}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-read_fun">read_fun()</a></h3>
+<p><tt>read_fun() = fun(() -&gt; {ok, any()} | error)</tt></p>
+
+
+<h3 class="typedecl"><a name="type-tag">tag()</a></h3>
+<p><tt>tag() = cache | nocache</tt></p>
+
+
+<h3 class="typedecl"><a name="type-update_fun">update_fun()</a></h3>
+<p><tt>update_fun() = fun(() -&gt; ok | {ok, any()} | error)</tt></p>
+
+
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#all-0">all/0</a></td><td></td></tr>
+<tr><td valign="top"><a href="#clean-1">clean/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#clean-2">clean/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#clear-1">clear/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#clear-2">clear/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#code_change-3">code_change/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#delete-1">delete/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#delete-2">delete/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#delete-3">delete/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#delete_counter-1">delete_counter/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#delete_counter_nif-1">delete_counter_nif/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#filter-2">filter/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#fold-3">fold/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#get_counter-1">get_counter/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#get_counter_nif-1">get_counter_nif/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#handle_call-3">handle_call/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#handle_cast-2">handle_cast/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#handle_info-2">handle_info/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#incr-3">incr/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#incr-4">incr/4</a></td><td></td></tr>
+<tr><td valign="top"><a href="#incr_counter-1">incr_counter/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#incr_counter_nif-1">incr_counter_nif/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#info-1">info/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#info-2">info/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#init-1">init/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#insert-3">insert/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#insert-4">insert/4</a></td><td></td></tr>
+<tr><td valign="top"><a href="#insert_new-3">insert_new/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#insert_new-4">insert_new/4</a></td><td></td></tr>
+<tr><td valign="top"><a href="#lookup-2">lookup/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#lookup-3">lookup/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#match_delete-2">match_delete/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#match_delete-3">match_delete/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#new-1">new/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#new-2">new/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#new_counter-0">new_counter/0</a></td><td></td></tr>
+<tr><td valign="top"><a href="#new_counter_nif-0">new_counter_nif/0</a></td><td></td></tr>
+<tr><td valign="top"><a href="#setopts-2">setopts/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#start_link-2">start_link/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#terminate-2">terminate/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#untag-1">untag/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#update-4">update/4</a></td><td></td></tr>
+<tr><td valign="top"><a href="#update-5">update/5</a></td><td></td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="all-0">all/0</a></h3>
+<div class="spec">
+<p><tt>all() -&gt; [atom()]</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="clean-1">clean/1</a></h3>
+<div class="spec">
+<p><tt>clean(Name::atom()) -&gt; ok</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="clean-2">clean/2</a></h3>
+<div class="spec">
+<p><tt>clean(Name::atom(), Nodes::[node()]) -&gt; ok</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="clear-1">clear/1</a></h3>
+<div class="spec">
+<p><tt>clear(Name::atom()) -&gt; ok</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="clear-2">clear/2</a></h3>
+<div class="spec">
+<p><tt>clear(Name::atom(), Nodes::[atom()]) -&gt; ok</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="code_change-3">code_change/3</a></h3>
+<div class="spec">
+<p><tt>code_change(OldVsn, State, Extra) -&gt; any()</tt></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="delete-1">delete/1</a></h3>
+<div class="spec">
+<p><tt>delete(Name::atom()) -&gt; ok</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="delete-2">delete/2</a></h3>
+<div class="spec">
+<p><tt>delete(Name::atom(), Key::any()) -&gt; ok</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="delete-3">delete/3</a></h3>
+<div class="spec">
+<p><tt>delete(Name::atom(), Key::any(), Nodes::[atom()]) -&gt; ok</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="delete_counter-1">delete_counter/1</a></h3>
+<div class="spec">
+<p><tt>delete_counter(Name::<a href="#type-counter">counter()</a>) -&gt; ok</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="delete_counter_nif-1">delete_counter_nif/1</a></h3>
+<div class="spec">
+<p><tt>delete_counter_nif(X1::<a href="#type-counter">counter()</a>) -&gt; ok</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="filter-2">filter/2</a></h3>
+<div class="spec">
+<p><tt>filter(Name::atom(), FilterFun::<a href="#type-filter_fun">filter_fun()</a>) -&gt; non_neg_integer()</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="fold-3">fold/3</a></h3>
+<div class="spec">
+<p><tt>fold(FoldFun::<a href="#type-fold_fun">fold_fun()</a>, Acc::any(), Name::atom()) -&gt; any()</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="get_counter-1">get_counter/1</a></h3>
+<div class="spec">
+<p><tt>get_counter(Name::atom()) -&gt; non_neg_integer()</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="get_counter_nif-1">get_counter_nif/1</a></h3>
+<div class="spec">
+<p><tt>get_counter_nif(X1::<a href="#type-counter">counter()</a>) -&gt; non_neg_integer()</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="handle_call-3">handle_call/3</a></h3>
+<div class="spec">
+<p><tt>handle_call(Request, From, State) -&gt; any()</tt></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="handle_cast-2">handle_cast/2</a></h3>
+<div class="spec">
+<p><tt>handle_cast(Msg, State) -&gt; any()</tt></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="handle_info-2">handle_info/2</a></h3>
+<div class="spec">
+<p><tt>handle_info(Info, State) -&gt; any()</tt></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="incr-3">incr/3</a></h3>
+<div class="spec">
+<p><tt>incr(Name::atom(), Key::any(), Incr::non_neg_integer()) -&gt; ok</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="incr-4">incr/4</a></h3>
+<div class="spec">
+<p><tt>incr(Name::atom(), Key::any(), Incr::non_neg_integer(), Nodes::[node()]) -&gt; ok</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="incr_counter-1">incr_counter/1</a></h3>
+<div class="spec">
+<p><tt>incr_counter(Name::atom()) -&gt; non_neg_integer()</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="incr_counter_nif-1">incr_counter_nif/1</a></h3>
+<div class="spec">
+<p><tt>incr_counter_nif(X1::<a href="#type-counter">counter()</a>) -&gt; non_neg_integer()</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="info-1">info/1</a></h3>
+<div class="spec">
+<p><tt>info(Name::atom()) -&gt; [<a href="/__w/cache_tab/stdlib/doc/proplists.html#type-property">proplists:property()</a>]</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="info-2">info/2</a></h3>
+<div class="spec">
+<p><tt>info(Name::atom(), Option::atom()) -&gt; any()</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="init-1">init/1</a></h3>
+<div class="spec">
+<p><tt>init(X1) -&gt; any()</tt></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="insert-3">insert/3</a></h3>
+<div class="spec">
+<p><tt>insert(Name::atom(), Key::any(), Val::any()) -&gt; boolean()</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="insert-4">insert/4</a></h3>
+<div class="spec">
+<p><tt>insert(Name::atom(), Key::any(), Val::any(), Nodes::[node()]) -&gt; boolean()</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="insert_new-3">insert_new/3</a></h3>
+<div class="spec">
+<p><tt>insert_new(Name::atom(), Key::any(), Val::any()) -&gt; boolean()</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="insert_new-4">insert_new/4</a></h3>
+<div class="spec">
+<p><tt>insert_new(Name::atom(), Key::any(), Val::any(), Nodes::[node()]) -&gt; boolean()</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="lookup-2">lookup/2</a></h3>
+<div class="spec">
+<p><tt>lookup(Name::atom(), Key::any()) -&gt; {ok, any()} | any()</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="lookup-3">lookup/3</a></h3>
+<div class="spec">
+<p><tt>lookup(Name::atom(), Key::any(), Return::<a href="#type-read_fun">read_fun()</a> | term()) -&gt; {ok, any()} | any()</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="match_delete-2">match_delete/2</a></h3>
+<div class="spec">
+<p><tt>match_delete(Name::atom(), Match::any()) -&gt; ok</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="match_delete-3">match_delete/3</a></h3>
+<div class="spec">
+<p><tt>match_delete(Name::atom(), Match::any(), Nodes::[atom()]) -&gt; ok</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="new-1">new/1</a></h3>
+<div class="spec">
+<p><tt>new(Name::atom()) -&gt; ok</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="new-2">new/2</a></h3>
+<div class="spec">
+<p><tt>new(Name::atom(), Opts::[<a href="#type-option">option()</a>]) -&gt; ok</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="new_counter-0">new_counter/0</a></h3>
+<div class="spec">
+<p><tt>new_counter() -&gt; <a href="#type-counter">counter()</a></tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="new_counter_nif-0">new_counter_nif/0</a></h3>
+<div class="spec">
+<p><tt>new_counter_nif() -&gt; {ok, <a href="#type-counter">counter()</a>} | {error, {system_limit, pos_integer()}}</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="setopts-2">setopts/2</a></h3>
+<div class="spec">
+<p><tt>setopts(Name::atom(), Opts::[<a href="#type-option">option()</a>]) -&gt; ok</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="start_link-2">start_link/2</a></h3>
+<div class="spec">
+<p><tt>start_link(Name, Opts) -&gt; any()</tt></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="terminate-2">terminate/2</a></h3>
+<div class="spec">
+<p><tt>terminate(Reason, State) -&gt; any()</tt></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="untag-1">untag/1</a></h3>
+<div class="spec">
+<p><tt>untag(Val::term()) -&gt; term()</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="update-4">update/4</a></h3>
+<div class="spec">
+<p><tt>update(Name::atom(), Key::any(), Val::{ok, any()} | error, UpdateFun::<a href="#type-update_fun">update_fun()</a>) -&gt; ok | any()</tt><br></p>
+<p> </p>
+</div>
+
+<h3 class="function"><a name="update-5">update/5</a></h3>
+<div class="spec">
+<p><tt>update(Name::atom(), Key::any(), Val::{ok, any()} | error, UpdateFun::<a href="#type-update_fun">update_fun()</a>, Nodes::[node()]) -&gt; ok | any()</tt><br></p>
+<p> </p>
+</div>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc</i></p>
+</body>
+</html>
