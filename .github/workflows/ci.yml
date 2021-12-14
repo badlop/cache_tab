@@ -18,8 +18,29 @@ jobs:
     - run: rebar3 compile
     - run: rebar3 xref
     - run: rebar3 dialyzer
-    - run: rebar3 eunit -v
     - run: rebar3 edoc
+
+    - name: Run tests
+      if: matrix.otp != 24
+      run: rebar3 eunit -v
+    - name: Run tests (OTP 24)
+      if: matrix.otp == 24
+      id: ctstep
+      run: rebar3 eunit -v
+
+    - name: Upload edoc to GitHub Pages
+      if: (steps.ctstep.outcome == 'failure') && (github.repository == 'badlop/cache_tab')
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        publish_dir: doc
+        destination_dir: edoc
+        publish_branch: ecil
+        keep_files: true
+
+    - name: View links to Github Pages
+      if: (steps.ctstep2.outcome != 'success') && (github.repository == 'badlop/cache_tab')
+      run: |
+        echo "::notice::View this EDoc: https://badlop.github.io/cache_tab/"
 
 
 
