@@ -34,7 +34,8 @@ jobs:
       continue-on-error: true
 
     - name: result2
-      run: echo 'Resultado2: ${{ steps.ctstep.outcome }}'
+      run: |
+        echo 'Resultado2: ${{ steps.ctstep.outcome }}'
       continue-on-error: true
 
     - name: Upload edoc to GitHub Pages
