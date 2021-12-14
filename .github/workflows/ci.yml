@@ -49,11 +49,6 @@ jobs:
         keep_files: true
 
     - name: Upload edoc to GitHub Pages
-      if: (steps.ctstep.outcome == failure) && (github.repository == 'badlop/cache_tab')
-      run: |
-        echo 'repository: ${{ github.repository }}'
-
-    - name: Upload edoc to GitHub Pages
       if: (steps.ctstep.outcome == 'failure')
       run: |
         echo 'repository: ${{ github.repository }}'
