@@ -19,23 +19,23 @@ jobs:
       #- run: rebar3 xref
       #- run: rebar3 dialyzer
     - run: rebar3 edoc
+      id: edoc
 
     - name: Run tests
       if: matrix.otp != 24
+      id: ctstep19
       run: rebar3 eunit -v
     - name: Run tests (OTP 24)
       if: matrix.otp == 24
       id: ctstep
       run: rebar3 eunit -v
 
-    - name: result1
-      run: |
-        echo 'Resultado1: steps.ctstep.outcome'
-      continue-on-error: true
-
     - name: result2
       run: |
-        echo 'Resultado2: ${{ steps.ctstep.outcome }}'
+        echo 'repository: ${{ github.repository }}'
+        echo 'edoc outcome: ${{ steps.edoc.outcome }}'
+        echo 'ctstep19 outcome: ${{ steps.ctstep19.outcome }}'
+        echo 'ctstep24 outcome: ${{ steps.ctstep.outcome }}'
       continue-on-error: true
 
     - name: Upload edoc to GitHub Pages
